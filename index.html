@@ -96,6 +96,91 @@
     if (r === 0) return monthlyPayment * months;
     return monthlyPayment * ((Math.pow(1 + r, months) - 1) / r);
   }
+
+  // --- Scenario assembly ---
+  function computeScenarios(inputs) {
+    const months = inputs.termYears * 12;
+    const resaleValue = inputs.price * (inputs.resalePct / 100);
+
+    const loanPayment = amortizedPayment(inputs.price - inputs.loanDeposit, inputs.loanApr, months);
+    const pcpPayment = amortizedPayment(
+      inputs.price - inputs.pcpDeposit - inputs.pcpBalloon,
+      inputs.pcpApr,
+      months
+    );
+
+    const raw = [
+      { name: 'Cash purchase', upfront: inputs.price, monthly: 0, carEquity: resaleValue, balloon: 0 },
+      { name: 'Loan / HP', upfront: inputs.loanDeposit, monthly: loanPayment, carEquity: resaleValue, balloon: 0 },
+      { name: 'PCP — keep', upfront: inputs.pcpDeposit, monthly: pcpPayment, carEquity: resaleValue, balloon: inputs.pcpBalloon },
+      { name: 'PCP — return', upfront: inputs.pcpDeposit, monthly: pcpPayment, carEquity: 0, balloon: 0 },
+      { name: 'Lease / PCH', upfront: inputs.leaseInitialRental, monthly: inputs.leaseMonthly, carEquity: 0, balloon: 0 },
+    ];
+
+    const maxMonthly = Math.max(...raw.map((s) => s.monthly));
+
+    return raw.map((s) => {
+      const lumpFV = futureValueLumpSum(inputs.price - s.upfront, inputs.investmentReturnPct, months);
+      const slackFV = futureValueAnnuity(maxMonthly - s.monthly, inputs.investmentReturnPct, months);
+      const investmentBalance = lumpFV + slackFV;
+      const totalPaid = s.upfront + s.monthly * months + s.balloon;
+      return {
+        name: s.name,
+        totalPaid,
+        carEquity: s.carEquity,
+        investmentBalance,
+        netWorth: s.carEquity + investmentBalance,
+      };
+    });
+  }
+
+  // --- UI wiring ---
+  function readInputs() {
+    const val = (id) => parseFloat(document.getElementById(id).value);
+    return {
+      price: val('price'),
+      termYears: val('termYears'),
+      investmentReturnPct: val('investmentReturnPct'),
+      resalePct: val('resalePct'),
+      loanDeposit: val('loanDeposit'),
+      loanApr: val('loanApr'),
+      pcpDeposit: val('pcpDeposit'),
+      pcpApr: val('pcpApr'),
+      pcpBalloon: val('pcpBalloon'),
+      leaseInitialRental: val('leaseInitialRental'),
+      leaseMonthly: val('leaseMonthly'),
+    };
+  }
+
+  function formatGBP(n) {
+    return '£' + n.toLocaleString('en-GB', { maximumFractionDigits: 0 });
+  }
+
+  function render(scenarios, inputs) {
+    const sorted = [...scenarios].sort((a, b) => b.netWorth - a.netWorth);
+    const body = document.getElementById('resultsBody');
+    body.innerHTML = '';
+    sorted.forEach((s, i) => {
+      const tr = document.createElement('tr');
+      if (i === 0) tr.className = 'winner';
+      tr.innerHTML = `<td>${s.name}</td><td>${formatGBP(s.totalPaid)}</td><td>${formatGBP(s.carEquity)}</td><td>${formatGBP(s.investmentBalance)}</td><td>${formatGBP(s.netWorth)}</td>`;
+      body.appendChild(tr);
+    });
+    document.getElementById('resultsTable').hidden = false;
+
+    const assumptions = document.getElementById('assumptions');
+    assumptions.hidden = false;
+    assumptions.textContent =
+      `Assumptions: £${inputs.price} vehicle, ${inputs.termYears}-year term, ` +
+      `${inputs.investmentReturnPct}% assumed annual investment return, ` +
+      `${inputs.resalePct}% resale value retained. Money not spent upfront, or freed up by a ` +
+      `lower monthly payment than the priciest option, is assumed invested and compounding monthly.`;
+  }
+
+  document.getElementById('calculateButton').addEventListener('click', () => {
+    const inputs = readInputs();
+    render(computeScenarios(inputs), inputs);
+  });
 </script>
 
 </body>

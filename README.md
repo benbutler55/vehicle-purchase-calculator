@@ -44,7 +44,7 @@ was hand-verified against known formulas:
   £18,000 at 7% APR over 48 months)
 - `futureValueLumpSum(18000, 5, 48)` ≈ £21,976.11 (£18,000 at 5%/year,
   monthly compounding, 48 months)
-- `futureValueAnnuity(430.86, 5, 48)` ≈ £22,841.96 (£430.86/month invested
+- `futureValueAnnuity(431.03, 5, 48)` ≈ £22,851.01 (£431.03/month invested
   at 5%/year for 48 months)
 
 Full worked example (defaults pre-filled in the form): £20,000 vehicle,

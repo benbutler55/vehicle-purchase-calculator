@@ -28,7 +28,10 @@ parts, both compounding monthly at the assumed return:
 This is the standard "finance and invest the difference" personal-finance
 model: loan/PCP/lease payments are assumed funded from ordinary income, not
 by drawing down the invested lump sum, so both amounts compound
-independently and combine into the final net worth. See
+independently and combine into the final net worth. For PCP — keep, the
+balloon payment is paid out of pocket at the end of the term to take
+ownership of the car, so it is deducted from the investment balance —
+ownership isn't free. See
 `docs/superpowers/specs/2026-09-21-vehicle-purchase-calculator-design.md`
 in the `claude-config`/`personal` workspace for the full design rationale.
 
@@ -37,7 +40,7 @@ in the `claude-config`/`personal` workspace for the full design rationale.
 No test framework — this is a single static HTML file with inline JS. It
 was hand-verified against known formulas:
 
-- `amortizedPayment(18000, 7, 48)` ≈ £430.86 (standard loan amortization,
+- `amortizedPayment(18000, 7, 48)` ≈ £431.03 (standard loan amortization,
   £18,000 at 7% APR over 48 months)
 - `futureValueLumpSum(18000, 5, 48)` ≈ £21,976.11 (£18,000 at 5%/year,
   monthly compounding, 48 months)
@@ -51,8 +54,8 @@ rental + £250/month:
 
 | Scenario | Total paid | Car equity | Investment balance | Net worth |
 |---|---|---|---|---|
-| PCP — keep | £21,273 | £8,000 | £32,377 | £40,377 |
 | Lease / PCH | £13,000 | £0 | £32,794 | £32,794 |
+| PCP — keep | £21,273 | £8,000 | £24,377 | £32,377 |
 | PCP — return | £13,273 | £0 | £32,377 | £32,377 |
 | Cash purchase | £20,000 | £8,000 | £22,851 | £30,851 |
 | Loan / HP | £22,690 | £8,000 | £21,976 | £29,976 |

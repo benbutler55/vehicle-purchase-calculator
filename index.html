@@ -122,7 +122,7 @@
     return raw.map((s) => {
       const lumpFV = futureValueLumpSum(inputs.price - s.upfront, inputs.investmentReturnPct, months);
       const slackFV = futureValueAnnuity(maxMonthly - s.monthly, inputs.investmentReturnPct, months);
-      const investmentBalance = lumpFV + slackFV;
+      const investmentBalance = lumpFV + slackFV - s.balloon;
       const totalPaid = s.upfront + s.monthly * months + s.balloon;
       return {
         name: s.name,

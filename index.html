@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vehicle Purchase Calculator</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+  h1 { font-size: 1.5rem; }
+  fieldset { margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 6px; }
+  legend { font-weight: 600; }
+  label { display: block; margin: 0.5rem 0 0.15rem; font-size: 0.9rem; }
+  input { width: 100%; padding: 0.4rem; box-sizing: border-box; }
+  .row { display: flex; gap: 1rem; }
+  .row > div { flex: 1; }
+  button { margin-top: 1rem; padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+  th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  tr.winner { background: #e6f4ea; font-weight: 600; }
+  #assumptions { margin-top: 1rem; font-size: 0.85rem; color: #555; }
+</style>
+</head>
+<body>
+<h1>Vehicle Purchase Calculator</h1>
+<p>Compares net worth after N years across cash, loan/HP, PCP (keep or return), and lease.</p>
+
+<fieldset>
+  <legend>Shared</legend>
+  <div class="row">
+    <div><label for="price">Vehicle price (&pound;)</label><input id="price" type="number" value="20000"></div>
+    <div><label for="termYears">Comparison term (years)</label><input id="termYears" type="number" value="4"></div>
+  </div>
+  <div class="row">
+    <div><label for="investmentReturnPct">Assumed annual investment return (%)</label><input id="investmentReturnPct" type="number" value="5"></div>
+    <div><label for="resalePct">Resale value at end of term (% of price)</label><input id="resalePct" type="number" value="40"></div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Loan / HP</legend>
+  <div class="row">
+    <div><label for="loanDeposit">Deposit (&pound;)</label><input id="loanDeposit" type="number" value="2000"></div>
+    <div><label for="loanApr">APR (%)</label><input id="loanApr" type="number" value="7"></div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>PCP</legend>
+  <div class="row">
+    <div><label for="pcpDeposit">Deposit (&pound;)</label><input id="pcpDeposit" type="number" value="2000"></div>
+    <div><label for="pcpApr">APR (%)</label><input id="pcpApr" type="number" value="6"></div>
+    <div><label for="pcpBalloon">Balloon / GFV (&pound;)</label><input id="pcpBalloon" type="number" value="8000"></div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>Lease / PCH</legend>
+  <div class="row">
+    <div><label for="leaseInitialRental">Initial rental (&pound;)</label><input id="leaseInitialRental" type="number" value="1000"></div>
+    <div><label for="leaseMonthly">Monthly payment (&pound;)</label><input id="leaseMonthly" type="number" value="250"></div>
+  </div>
+</fieldset>
+
+<button id="calculateButton">Calculate</button>
+
+<table id="resultsTable" hidden>
+  <thead>
+    <tr><th>Scenario</th><th>Total paid</th><th>Car equity</th><th>Investment balance</th><th>Net worth</th></tr>
+  </thead>
+  <tbody id="resultsBody"></tbody>
+</table>
+
+<div id="assumptions" hidden></div>
+
+</body>
+</html>

@@ -72,5 +72,31 @@
 
 <div id="assumptions" hidden></div>
 
+<script>
+  // --- Core finance functions ---
+  function monthlyRate(annualPct) {
+    return annualPct / 100 / 12;
+  }
+
+  function amortizedPayment(principal, aprPct, months) {
+    if (months <= 0) return 0;
+    const r = monthlyRate(aprPct);
+    if (r === 0) return principal / months;
+    return (principal * r) / (1 - Math.pow(1 + r, -months));
+  }
+
+  function futureValueLumpSum(presentValue, annualPct, months) {
+    const r = monthlyRate(annualPct);
+    return presentValue * Math.pow(1 + r, months);
+  }
+
+  function futureValueAnnuity(monthlyPayment, annualPct, months) {
+    if (months <= 0) return 0;
+    const r = monthlyRate(annualPct);
+    if (r === 0) return monthlyPayment * months;
+    return monthlyPayment * ((Math.pow(1 + r, months) - 1) / r);
+  }
+</script>
+
 </body>
 </html>

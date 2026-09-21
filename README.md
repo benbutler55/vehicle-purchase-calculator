@@ -49,14 +49,16 @@ was hand-verified against known formulas:
 
 Full worked example (defaults pre-filled in the form): £20,000 vehicle,
 4-year term, 5% investment return, 40% resale, loan deposit £2,000 @ 7%
-APR, PCP deposit £2,000 @ 6% APR with £8,000 balloon, lease £1,000 initial
-rental + £250/month:
+APR, PCP deposit £2,000 @ 9.5% APR with £8,000 balloon, lease £1,000
+initial rental + £250/month. (PCP's APR default is set higher than the
+loan's — dealer PCP typically carries a higher APR than a personal loan or
+HP, even though its lower monthly payment can make it look cheaper.)
 
 | Scenario | Total paid | Car equity | Investment balance | Net worth |
 |---|---|---|---|---|
 | Lease / PCH | £13,000 | £0 | £32,794 | £32,794 |
-| PCP — keep | £21,273 | £8,000 | £24,377 | £32,377 |
-| PCP — return | £13,273 | £0 | £32,377 | £32,377 |
+| PCP — keep | £22,059 | £8,000 | £23,508 | £31,508 |
+| PCP — return | £14,059 | £0 | £31,508 | £31,508 |
 | Cash purchase | £20,000 | £8,000 | £22,851 | £30,851 |
 | Loan / HP | £22,690 | £8,000 | £21,976 | £29,976 |
 

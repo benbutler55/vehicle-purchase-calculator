@@ -10,7 +10,8 @@ Open `index.html` directly in a browser — no build step, no server, no
 dependencies. Fill in the shared fields (price, term, assumed investment
 return, resale %) and each method's fields, then click **Calculate**. The
 results table is sorted by net worth, highest first, with the winner
-highlighted.
+highlighted. Click **Reset to defaults** to restore all fields to their
+original values and clear the results.
 
 ## Model
 
@@ -47,7 +48,7 @@ was hand-verified against known formulas:
 - `futureValueAnnuity(431.03, 5, 48)` ≈ £22,851.01 (£431.03/month invested
   at 5%/year for 48 months)
 
-Full worked example (defaults pre-filled in the form): £20,000 vehicle,
+Full worked example (defaults pre-filled in the form): £32,000 vehicle,
 4-year term, 5% investment return, 40% resale, loan deposit £2,000 @ 7%
 APR, PCP deposit £2,000 @ 9.5% APR with £8,000 balloon, lease £1,000
 initial rental + £250/month. (PCP's APR default is set higher than the
@@ -56,11 +57,11 @@ HP, even though its lower monthly payment can make it look cheaper.)
 
 | Scenario | Total paid | Car equity | Investment balance | Net worth |
 |---|---|---|---|---|
-| Lease / PCH | £13,000 | £0 | £32,794 | £32,794 |
-| PCP — keep | £22,059 | £8,000 | £23,508 | £31,508 |
-| PCP — return | £14,059 | £0 | £31,508 | £31,508 |
-| Cash purchase | £20,000 | £8,000 | £22,851 | £30,851 |
-| Loan / HP | £22,690 | £8,000 | £21,976 | £29,976 |
+| Lease / PCH | £13,000 | £0 | £62,679 | £62,679 |
+| Cash purchase | £32,000 | £12,800 | £38,085 | £50,885 |
+| PCP — keep | £36,530 | £12,800 | £37,410 | £50,210 |
+| Loan / HP | £36,483 | £12,800 | £36,627 | £49,427 |
+| PCP — return | £28,530 | £0 | £45,410 | £45,410 |
 
 ## Out of scope
 

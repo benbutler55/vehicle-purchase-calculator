@@ -24,10 +24,11 @@
 <h1>Vehicle Purchase Calculator</h1>
 <p>Compares net worth after N years across cash, loan/HP, PCP (keep or return), and lease.</p>
 
+<form id="calcForm">
 <fieldset>
   <legend>Shared</legend>
   <div class="row">
-    <div><label for="price">Vehicle price (&pound;)</label><input id="price" type="number" value="20000"></div>
+    <div><label for="price">Vehicle price (&pound;)</label><input id="price" type="number" value="32000"></div>
     <div><label for="termYears">Comparison term (years)</label><input id="termYears" type="number" value="4"></div>
   </div>
   <div class="row">
@@ -61,7 +62,9 @@
   </div>
 </fieldset>
 
-<button id="calculateButton">Calculate</button>
+<button id="calculateButton" type="button">Calculate</button>
+<button id="resetButton" type="reset">Reset to defaults</button>
+</form>
 
 <table id="resultsTable" hidden>
   <thead>
@@ -180,6 +183,11 @@
   document.getElementById('calculateButton').addEventListener('click', () => {
     const inputs = readInputs();
     render(computeScenarios(inputs), inputs);
+  });
+
+  document.getElementById('calcForm').addEventListener('reset', () => {
+    document.getElementById('resultsTable').hidden = true;
+    document.getElementById('assumptions').hidden = true;
   });
 </script>
 
